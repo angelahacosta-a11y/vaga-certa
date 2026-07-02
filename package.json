@@ -1,0 +1,9 @@
+{
+  "name": "vaga-certa-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vaga Certa - plataforma de vagas para profissionais de beleza, idiomas e cursos",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
