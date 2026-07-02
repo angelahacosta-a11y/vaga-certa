@@ -257,6 +257,15 @@ function showToast(msg, type){
   root.appendChild(el);
   setTimeout(()=>{ el.remove(); }, type==='error'?9000:4200);
 }
+function markdownToHtml(text){
+  if(!text) return '';
+  return escapeHtml(text)
+    .replace(/^#{1,3} (.+)$/gm, '<strong style="font-size:1rem;display:block;margin:10px 0 4px;">$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '• $1')
+    .replace(/\n\n/g, '</p><p style="margin:8px 0;">')
+    .replace(/\n/g, '<br>');
+}
 function whatsappLink(numero){
   if(!numero) return '';
   let digits = String(numero).replace(/\D/g,'');
@@ -759,8 +768,8 @@ function vagaTicketHtml(v){
       '<span class="tag '+AREA_TAG_CLASS[v.area]+'">'+AREA_LABELS[v.area]+'</span>'+
     '</div><div class="ticket-perf"></div>'+
     '<div class="ticket-body">'+
-      '<p>'+escapeHtml(v.descricao)+'</p>'+
-      (v.requisitos?'<p><strong>Requisitos:</strong> '+escapeHtml(v.requisitos)+'</p>':'')+
+      '<p style="margin:0;">'+markdownToHtml(v.descricao)+'</p>'+
+      (v.requisitos?'<p style="margin:8px 0 0;"><strong>Requisitos:</strong> '+escapeHtml(v.requisitos)+'</p>':'')+
       '<p class="mono" style="font-size:0.75rem;color:var(--ink-soft)">'+escapeHtml(v.tipoContrato)+(v.faixaSalarial?(' · '+escapeHtml(v.faixaSalarial)):'')+'</p>'+
       (escola&&escola.sobre?'<p style="font-size:0.85rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:10px;margin-top:10px;"><strong>Sobre '+escapeHtml(v.schoolNome)+':</strong> '+escapeHtml(escola.sobre)+'</p>':'')+
     '</div>'+
